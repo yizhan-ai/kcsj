@@ -103,6 +103,8 @@ public final class CheckInDao {
         Connection connection = null;
         PreparedStatement pstmt = null;
         try {
+            connection = JdbcHelper.getConn();
+            connection.setAutoCommit(false);
             //在该连接上创建预编译语句对象
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM checkIn WHERE id=?");
             //为预编译参数赋值
