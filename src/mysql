@@ -1,0 +1,110 @@
+ create database ks default character set utf8 collate utf8_general_ci;
+
+create table Actor(
+    id bigint not null auto_increment,
+    name varchar(255) not null,
+    no varchar(255) not null,
+    primary key (id)
+);
+create table LoginClient (
+               id bigint not null ,
+               primary key (id),
+               foreign key(id) references Actor(id)
+           );
+create table Manager(
+     id bigint not null,
+     primary key (id),
+     foreign key(id) references Actor(id)
+);
+create table Waiter(
+     id bigint not null,
+     workdays varchar(255) not null,
+     salary varchar(255) not null,
+     primary key (id),
+     foreign key(id) references Actor(id)
+);
+create table User(
+    id bigint not null auto_increment,
+    username varchar(255) not null,
+    password varchar(255) not null,
+    actor_id bigint not null,
+    primary key (id),
+    foreign key(actor_id) references Actor(id)
+);
+create table Role(
+    id bigint not null auto_increment,
+    name varchar(255) not null,
+    no varchar(255) not null,
+    primary key (id)
+);
+create table UserRoleAss(
+    id bigint not null auto_increment,
+    user_id bigint not null,
+    role_id bigint not null,
+    primary key (id),
+    foreign key(user_id) references User(id),
+    foreign key(role_id) references Role(id)
+);
+ create table RoomStatus (
+            id bigint not null auto_increment,
+            description varchar(255) not null,
+            primary key (id)
+           );
+create table RoomPrice (
+                id bigint not null auto_increment,
+                roomPrice integer not null,
+                primary key (id)
+            );
+create table RoomType (
+            id bigint not null auto_increment,
+            name varchar(255) not null,
+            roomPrice_id bigint,
+            manager_id bigint,
+            primary key (id),
+            foreign key(roomPrice_id) references RoomPrice(id)
+        );
+create table Room (
+                id bigint not null auto_increment,
+                no varchar(255) not null,
+                roomType_id bigint,
+                roomStatus_id bigint,
+                primary key (id),
+                foreign key(roomType_id) references RoomType(id),
+                foreign key(roomStatus_id) references RoomStatus(id)
+            );
+
+create table Information (
+            id bigint not null auto_increment,
+            name varchar(255) not null,
+            idCard varchar(255) not null,
+            phoneNumber varchar(255) not null,
+            inTime date not null,
+            outTime date not null,
+            room_id bigint,
+            primary key (id),
+            foreign key(room_id) references Room(id)
+           );
+ create table CheckIn (
+                       id bigint not null auto_increment,
+                       information_id bigint not null,
+                       primary key (id),
+                       foreign key(information_id) references Information(id)
+                      );
+create table Booking (
+                id bigint not null auto_increment,
+                name varchar(255) not null,
+                idCard  varchar(255) not null,
+                phoneNumber varchar(255) not null,
+                inTime date not null,
+                outTime date not null,
+                roomType_id bigint,
+                primary key (id),
+                foreign key(roomType_id) references RoomType(id)
+            );
+  create table Client (
+                           id bigint not null ,
+                           booking_id bigint not null ,
+                           primary key (id),
+                           foreign key(booking_id) references Booking(id)
+                       );
+
