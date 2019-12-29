@@ -112,7 +112,7 @@ public class WaiterDao {
             User user = new User(
                     waiter.getName(),
                     waiter.getNo(),
-                    waiter
+                    ActorDao.getInstance().find(actorId)
             );
             //添加User对象
             UserService.getInstance().add(connection,user);

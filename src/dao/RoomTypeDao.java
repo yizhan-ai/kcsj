@@ -40,27 +40,7 @@ public final class RoomTypeDao {
 		JdbcHelper.close(resultSet, statement, connection);
 		return roomTypes;
 	}
-	public Collection<RoomType> findAllByManager(Integer manager_id)throws SQLException{
-		//创建集合graduateProjects
-		Collection<RoomType> graduateProjects = new TreeSet<>();
-		//获得连接对象
-		Connection connection = JdbcHelper.getConn();
-		//在该连接上进行预编译
-		PreparedStatement preparedStatement = connection.prepareStatement("select * from roomtype where manager_id=?");
-		//给参数赋值
-		preparedStatement.setInt(1,manager_id);
-		//执行SQL查询语句并获得结果集
-		ResultSet resultSet = preparedStatement.executeQuery();
-		//若结果集仍然有下一条记录，则执行循环体
-		while (resultSet.next()){
-			RoomType graduateProject = new RoomType(resultSet.getInt("id"),
-					resultSet.getString("name"),
-					RoomPriceDao.getInstance().find(resultSet.getInt("roomPrice_id"))
-			);
-		}
-		JdbcHelper.close(resultSet,preparedStatement,connection);
-		return graduateProjects;
-	}
+
 	public RoomType find(Integer id) throws SQLException {
 		RoomType roomType = null;
 		Connection connection = JdbcHelper.getConn();

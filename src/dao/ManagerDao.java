@@ -105,7 +105,7 @@ public class ManagerDao {
             User user = new User(
                     manager.getName(),
                     manager.getNo(),
-                    manager
+                    ActorDao.getInstance().find(actorId)
             );
             //添加User对象
             UserService.getInstance().add(connection,user);

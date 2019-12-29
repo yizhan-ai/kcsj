@@ -19,9 +19,7 @@ public final class RoomTypeService {
 		return roomTypeService;
 	}
 
-	public Collection<RoomType> findAllByManager(Integer manager_id)throws SQLException{
-		return roomTypeDao.findAllByManager(manager_id);
-	}
+
 	public Collection<RoomType> findAll() throws SQLException {
 		return roomTypeDao.findAll();
 	}

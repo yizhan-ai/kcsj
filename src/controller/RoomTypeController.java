@@ -105,18 +105,12 @@ public class RoomTypeController extends HttpServlet {
         JSONObject message = new JSONObject();
         try {
             //如果id = null和school_id = null, 表示响应所有系对象
-            if (id_str == null&&managerId == null) {
+            if (id_str == null) {
                 responseRoomTypes(response);
             } else {
-                //若teacherId = null且id!=null，响应id对应的系对象
-                if (managerId == null) {
-                    int id = Integer.parseInt(id_str);
-                    responseRoomType(id, response);
-                } else {
-                    //若teacherId！= null且id=null，
-                    int id = Integer.parseInt(managerId);
-                    responseFindAllByManager(id, response);
-                }
+                int id = Integer.parseInt(id_str);
+                responseRoomType(id, response);
+
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -140,16 +134,7 @@ public class RoomTypeController extends HttpServlet {
         //响应roomType_json到前端
         response.getWriter().println(roomType_json);
     }
-    //响应SchoolId=1的所有系
-    private void responseFindAllByManager(int manager_id, HttpServletResponse response)
-            throws IOException,SQLException{
-        //根据School_id获得相对应的所有系
-        Collection<RoomType> rooms = RoomTypeService.getInstance().findAllByManager(manager_id);
-        //SerializerFeature是个枚举类型,消除对同一对象循环引用的问题,默认为false
-        String roomTypes_json = JSON.toJSONString(rooms, SerializerFeature.DisableCircularReferenceDetect);
-        //响应rooms_json到前端
-        response.getWriter().println(roomTypes_json);
-    }
+
     //响应所有学院对象
     private void responseRoomTypes(HttpServletResponse response)
             throws ServletException, IOException, SQLException {
